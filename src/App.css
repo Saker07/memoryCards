@@ -1,0 +1,12 @@
+.cardsHolder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    min-height: 400px;
+    max-height: 60%;
+}
+
+.card {
+    border-style: solid;
+    border-color: aqua;
+}
