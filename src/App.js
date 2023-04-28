@@ -43,6 +43,7 @@ function App() {
         return newArr;
       });
     } else if (currScore > bestScore) {
+      setCards((prev) => createShuffledCopy(prev));
       setBestScore(currScore);
     }
   }, [currScore]);
@@ -73,7 +74,7 @@ function App() {
           ))}
       </div>
       <div className="cardsHolder">
-        {createShuffledCopy(cards).map((element) => {
+        {cards.map((element) => {
           return (
             <div
               className="card"
