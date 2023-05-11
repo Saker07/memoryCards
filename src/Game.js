@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card.js";
-import json from "./cards.json";
+import json from "./kana.json";
 import Hints from "./Hints.js";
 
 function Game() {
   let [cards, setCards] = useState([]);
   let [currScore, setCurrScore] = useState(0);
   let [bestScore, setBestScore] = useState(0);
-  let [gameFace, setGameFace] = useState("front"); //front | back | altBack
-  let [hintFace, setHintFace] = useState("back");
+  let [gameFace, setGameFace] = useState("hira"); //front | back | altBack
+  let [hintFace, setHintFace] = useState("roumaji");
   let [hints, setHints] = useState([]);
 
   const numberOfCards = 6;
@@ -35,7 +35,15 @@ function Game() {
 
   useEffect(() => {
     //setCards([{id: 0, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 1, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 2, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 3, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 4, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 5, hit: false, eng: 'back', hira: 'back', kata: 'altBack'}])
-    setCards(createShuffledCopy([...json.cards]).slice(0, numberOfCards));
+    setCards(
+      createShuffledCopy([...json.cards])
+        .slice(0, numberOfCards)
+        .map((elem, index) => {
+          elem.id = index;
+          elem.hit = false;
+          return elem;
+        })
+    );
     console.log("mount");
   }, []);
 
