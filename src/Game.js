@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card.js";
 import json from "./cards.json";
+import Hints from "./Hints.js";
 
 function Game() {
   let [cards, setCards] = useState([]);
@@ -69,15 +70,8 @@ function Game() {
 
   return (
     <div className="game">
-      <div className="showHitCards">
-        {hints.map((elem) => (
-          // eslint-disable-next-line react/jsx-key
-          <b>
-            {" "}
-            {elem.id}_{elem[hintFace]} |{" "}
-          </b>
-        ))}
-      </div>
+      <Hints hints={hints} hintFace={hintFace} />
+
       <div className="cardsHolder">
         {cards.map((element) => {
           return (
