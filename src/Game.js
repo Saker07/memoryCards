@@ -71,7 +71,6 @@ function Game() {
   return (
     <div className="game">
       <Hints hints={hints} hintFace={hintFace} />
-
       <div className="cardsHolder">
         {cards.map((element) => {
           return (
