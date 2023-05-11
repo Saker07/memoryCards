@@ -7,11 +7,13 @@ function Game() {
   let [cards, setCards] = useState([]);
   let [currScore, setCurrScore] = useState(0);
   let [bestScore, setBestScore] = useState(0);
-  let [gameFace, setGameFace] = useState("hira"); //front | back | altBack
-  let [hintFace, setHintFace] = useState("roumaji");
   let [hints, setHints] = useState([]);
-
-  const numberOfCards = 6;
+  let [config, setConfig] = useState({
+    gameFace: "hira",
+    hintFace: "roumaji",
+    numberOfCards: 15,
+    hintsEnabled: false,
+  });
 
   let handleClick = (id) => {
     //card with correct id, make it hit=true if false, otherside all hit in cards set to false and currscore set to 0
@@ -37,7 +39,7 @@ function Game() {
     //setCards([{id: 0, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 1, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 2, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 3, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 4, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 5, hit: false, eng: 'back', hira: 'back', kata: 'altBack'}])
     setCards(
       createShuffledCopy([...json.cards])
-        .slice(0, numberOfCards)
+        .slice(0, config.numberOfCards)
         .map((elem, index) => {
           elem.id = index;
           elem.hit = false;
@@ -78,14 +80,14 @@ function Game() {
 
   return (
     <div className="game">
-      <Hints hints={hints} hintFace={hintFace} />
+      <Hints hints={hints} hintFace={config.hintFace} />
       <div className="cardsHolder">
         {cards.map((element) => {
           return (
             // eslint-disable-next-line react/jsx-key
             <Card
               element={element}
-              gameFace={gameFace}
+              gameFace={config.gameFace}
               handleClick={handleClick}
             />
           );
