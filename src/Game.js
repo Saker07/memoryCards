@@ -30,23 +30,41 @@ function Game() {
 
   let handleClick = (id) => {
     //card with correct id, make it hit=true if false, otherside all hit in cards set to false and currscore set to 0
-    let foundIndex = cards.findIndex((x) => x.id === id);
-    if (cards[foundIndex].hit) {
-      setCurrScore(0);
+    let cardIndex = cards.findIndex((x) => x.id === id);
+    if (cards[cardIndex].hit) {
+      resetGameState();
     } else {
-      setCards((prev) => {
-        let newArr = [...prev];
-        newArr[foundIndex].hit = true;
-        setHints((prev) => {
-          return [...prev, newArr[foundIndex]];
-        });
-        return newArr;
-      });
-      setCurrScore((prev) => {
-        return prev + 1;
-      });
+      advanceGameState(cardIndex);
     }
   };
+
+  function resetGameState() {
+    setCurrScore(0);
+    setHints([]);
+    setCards((prev) => {
+      let newArr = prev.map((elem) => {
+        elem.hit = false;
+        return elem;
+      });
+      return newArr;
+    });
+  }
+
+  function advanceGameState(hitCard) {
+    let card = cards[hitCard];
+    setHints((prev) => {
+      return [card, ...prev];
+    });
+    setCards((prev) => {
+      let newArr = [...prev];
+      newArr[hitCard].hit = true;
+      newArr = createShuffledCopy(newArr);
+      return newArr;
+    });
+    setCurrScore((prev) => {
+      return prev + 1;
+    });
+  }
 
   useEffect(() => {
     //setCards([{id: 0, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 1, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 2, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 3, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 4, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 5, hit: false, eng: 'back', hira: 'back', kata: 'altBack'}])
@@ -63,17 +81,7 @@ function Game() {
   }, []);
 
   useEffect(() => {
-    if (currScore === 0) {
-      setCards((prev) => {
-        let newArr = prev.map((elem) => {
-          elem.hit = false;
-          return elem;
-        });
-        setHints([]);
-        return newArr;
-      });
-    } else if (currScore > bestScore) {
-      setCards((prev) => createShuffledCopy(prev));
+    if (currScore > bestScore) {
       setBestScore(currScore);
     }
   }, [currScore]);
