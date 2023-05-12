@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <Header />
-      <Game />;
+      <Game />
       <Footer />
     </div>
   );

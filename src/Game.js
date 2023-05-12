@@ -3,6 +3,7 @@ import Card from "./Card.js";
 import json from "./kana.json";
 import Hints from "./Hints.js";
 import Settings from "./Settings.js";
+import { createShuffledCopy } from "./helpers.js";
 
 function Game() {
   let [cards, setCards] = useState([]);
@@ -76,19 +77,6 @@ function Game() {
       setBestScore(currScore);
     }
   }, [currScore]);
-
-  let createShuffledCopy = (arr) => {
-    let newArr = [...arr];
-    let m = newArr.length;
-    while (m) {
-      let i = Math.floor(Math.random() * m--);
-
-      let t = newArr[m];
-      newArr[m] = newArr[i];
-      newArr[i] = t;
-    }
-    return newArr;
-  };
 
   return (
     <div className="game">
