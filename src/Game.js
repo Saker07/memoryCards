@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card.js";
 import json from "./kana.json";
 import Hints from "./Hints.js";
+import Settings from "./Settings.js";
 
 function Game() {
   let [cards, setCards] = useState([]);
@@ -9,10 +10,21 @@ function Game() {
   let [bestScore, setBestScore] = useState(0);
   let [hints, setHints] = useState([]);
   let [config, setConfig] = useState({
-    gameFace: "hira",
-    hintFace: "roumaji",
-    numberOfCards: 15,
-    hintsEnabled: false,
+    game: {
+      gameFace: "hira",
+      hintFace: "roumaji",
+      numberOfCards: 15,
+      hintsEnabled: false,
+    },
+    style: {
+      cardSize: 30,
+      bgColor: "white",
+      fontSize: 10,
+      fontColor: "black",
+    },
+    advanced: {
+      test: null,
+    },
   });
 
   let handleClick = (id) => {
@@ -39,7 +51,7 @@ function Game() {
     //setCards([{id: 0, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 1, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 2, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 3, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 4, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 5, hit: false, eng: 'back', hira: 'back', kata: 'altBack'}])
     setCards(
       createShuffledCopy([...json.cards])
-        .slice(0, config.numberOfCards)
+        .slice(0, config.game.numberOfCards)
         .map((elem, index) => {
           elem.id = index;
           elem.hit = false;
@@ -80,14 +92,14 @@ function Game() {
 
   return (
     <div className="game">
-      <Hints hints={hints} hintFace={config.hintFace} />
+      <Hints hints={hints} hintFace={config.game.hintFace} />
       <div className="cardsHolder">
         {cards.map((element) => {
           return (
             // eslint-disable-next-line react/jsx-key
             <Card
               element={element}
-              gameFace={config.gameFace}
+              gameFace={config.game.gameFace}
               handleClick={handleClick}
             />
           );
@@ -95,6 +107,9 @@ function Game() {
       </div>
       <div>{currScore}</div>
       <div>{bestScore}</div>
+      <div style={{ backgroundColor: "gray" }}>
+        <Settings config={config} setConfig={setConfig} />
+      </div>
     </div>
   );
 }
