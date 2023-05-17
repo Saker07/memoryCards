@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import Card from "./Card.js";
 import json from "./kana.json";
@@ -5,28 +6,10 @@ import Hints from "./Hints.js";
 import Settings from "./Settings.js";
 import { createShuffledCopy } from "./helpers.js";
 
-function Game() {
-  let [cards, setCards] = useState([]);
+function Game({ cards, setCards, config, setConfig }) {
   let [currScore, setCurrScore] = useState(0);
   let [bestScore, setBestScore] = useState(0);
   let [hints, setHints] = useState([]);
-  let [config, setConfig] = useState({
-    game: {
-      gameFace: "hira",
-      hintFace: "roumaji",
-      numberOfCards: 15,
-      hintsEnabled: false,
-    },
-    style: {
-      cardSize: 30,
-      bgColor: "white",
-      fontSize: 10,
-      fontColor: "black",
-    },
-    advanced: {
-      test: null,
-    },
-  });
 
   let handleClick = (id) => {
     //card with correct id, make it hit=true if false, otherside all hit in cards set to false and currscore set to 0
@@ -67,7 +50,6 @@ function Game() {
   }
 
   useEffect(() => {
-    //setCards([{id: 0, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 1, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 2, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 3, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 4, hit: false, eng: 'back', hira: 'back', kata: 'altBack'},{id: 5, hit: false, eng: 'back', hira: 'back', kata: 'altBack'}])
     setCards(
       createShuffledCopy([...json.cards])
         .slice(0, config.game.numberOfCards)

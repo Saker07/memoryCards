@@ -3,11 +3,11 @@ import GameConfig from "./GameConfig.js";
 import StyleConfig from "./StyleConfig.js";
 import AdvancedConfig from "./AdvancedConfig.js";
 
-function Settings(props) {
+function Settings({ config, setConfig }) {
   //prop needed: setConfig, which will be passed as a specific setter
   //props needed: config, which is divided in gameconfig, style config and advanced config
   let setSubConfig = (key, value) => {
-    props.setConfig((prev) => {
+    setConfig((prev) => {
       return {
         ...prev,
         [key]: value,
@@ -17,15 +17,15 @@ function Settings(props) {
   return (
     <div>
       <GameConfig
-        gameConfig={props.config.game}
+        gameConfig={config.game}
         setGameConfig={(value) => setSubConfig("game", value)}
       />
       <StyleConfig
-        styleConfig={props.config.style}
+        styleConfig={config.style}
         setStyleConfig={(value) => setSubConfig("style", value)}
       />
       <AdvancedConfig
-        advancedConfig={props.config.advanced}
+        advancedConfig={config.advanced}
         setAdvancedConfig={(value) => setSubConfig("advanced", value)}
       />
     </div>
