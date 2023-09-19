@@ -85,9 +85,6 @@ function Game({ cards, setCards, config, setConfig }) {
       </div>
       <div>{currScore}</div>
       <div>{bestScore}</div>
-      <div style={{ backgroundColor: "gray" }}>
-        <Settings config={config} setConfig={setConfig} />
-      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Game from "./Game.js";
 import Settings from "./Settings.js";
 
@@ -23,23 +23,31 @@ function Main() {
     },
   });
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Game
-            cards={cards}
-            setCards={setCards}
-            config={config}
-            setConfig={setConfig}
-          />
-        }
-      ></Route>
-      <Route
-        path="/settings"
-        element={<Settings config={config} setConfig={setConfig} />}
-      ></Route>
-    </Routes>
+    <>
+      <div>
+        {/*TEMP DIVV TO BE SCRAPPED AND PUT IN HEADER*/}
+        DIVV TO BE SCRAPPED
+        <Link to="/">HOME</Link>
+        <Link to="/settings">Settings</Link>
+      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Game
+              cards={cards}
+              setCards={setCards}
+              config={config}
+              setConfig={setConfig}
+            />
+          }
+        ></Route>
+        <Route
+          path="/settings"
+          element={<Settings config={config} setConfig={setConfig} />}
+        ></Route>
+      </Routes>
+    </>
   );
 }
 
